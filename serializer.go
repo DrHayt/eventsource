@@ -3,6 +3,7 @@ package eventsource
 import (
 	"encoding/json"
 	"reflect"
+	"sync"
 
 	"github.com/vancelongwill/eventsource/pbevent"
 	"google.golang.org/protobuf/proto"
@@ -108,16 +109,20 @@ func NewJSONSerializer(events ...Event) *JSONSerializer {
 
 type ProtoSerializer struct {
 	eventTypes map[string]reflect.Type
+	mu         sync.Mutex
 }
 
 // Bind registers the specified events with the serializer; may be called more than once
 func (p *ProtoSerializer) Bind(events ...Event) {
+	p.mu.Lock()
 	for _, event := range events {
 		if _, ok := event.(proto.Message); ok {
 			eventType, reflectType := EventType(event)
 			p.eventTypes[eventType] = reflectType
 		}
 	}
+	p.mu.Unlock()
+
 }
 
 // MarshalEvent converts an Event to a Record
@@ -173,7 +178,7 @@ func (p *ProtoSerializer) UnmarshalEvent(record Record) (Event, error) {
 	return n.Interface().(Event), nil
 }
 
-// NewJSONSerializer constructs a new JSONSerializer and populates it with the specified events.
+// NewProtoSerializer constructs a new ProtoSerializer and populates it with the specified events.
 // Bind may be subsequently called to add more events.
 // Events must also fulfill the proto.Message interface.
 func NewProtoSerializer(events ...Event) *ProtoSerializer {

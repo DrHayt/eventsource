@@ -1,6 +1,7 @@
 syntax = "proto3";
 package pb;
-option go_package = ".;pb";
+option go_package = "github.com/vancelongwill/_examples/fullproto/pb";
+//option go_package = ".;./pb";
 
 import "google/protobuf/timestamp.proto";
 
@@ -16,4 +17,11 @@ message OrderShipped {
   google.protobuf.Timestamp at = 2;
   int32 version = 3;
   string destination = 4;
+}
+
+message OrderCancelled {
+  string order_id = 1;
+  google.protobuf.Timestamp at = 2;
+  int32 version = 3;
+  string cancel_reason = 4;
 }

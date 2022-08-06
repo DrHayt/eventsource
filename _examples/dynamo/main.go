@@ -70,9 +70,7 @@ func (item *User) On(event eventsource.Event) error {
 }
 
 func main() {
-	store, err := dynamodbstore.New("user_events",
-		dynamodbstore.WithRegion("us-west-2"),
-	)
+	store, err := dynamodbstore.New("es_orders")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -98,6 +96,13 @@ func main() {
 	}
 
 	ctx := context.Background()
+
+	// First load the existing events.
+	v1, err := repo.Load(ctx, id)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	err = repo.Save(ctx, setEmailEvent, setNameEvent)
 	if err != nil {
 		log.Fatalln(err)
