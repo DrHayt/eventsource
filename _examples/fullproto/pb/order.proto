@@ -8,20 +8,28 @@ import "google/protobuf/timestamp.proto";
 message OrderCreated {
   string order_id = 1;
   google.protobuf.Timestamp at = 2;
-  int32 version = 3;
+  int64 version = 3;
   string user_id = 4;
 }
 
 message OrderShipped {
   string order_id = 1;
   google.protobuf.Timestamp at = 2;
-  int32 version = 3;
+  int64 version = 3;
   string destination = 4;
 }
 
 message OrderCancelled {
   string order_id = 1;
   google.protobuf.Timestamp at = 2;
-  int32 version = 3;
+  int64 version = 3;
   string cancel_reason = 4;
+}
+
+message OrderNameChanged {
+  string order_id = 1;
+  google.protobuf.Timestamp at = 2;
+  int64 version = 3;
+  string first_name=4;
+  string last_name=5;
 }

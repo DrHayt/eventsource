@@ -6,6 +6,7 @@ require (
 	github.com/apex/go-apex v1.0.0
 	github.com/aws/aws-sdk-go v1.35.19
 	github.com/boltdb/bolt v1.3.1
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.1
 	github.com/lib/pq v1.8.0
