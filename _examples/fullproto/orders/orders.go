@@ -139,6 +139,6 @@ func (item *Order) Apply(ctx context.Context, command eventsource.Command) ([]ev
 		return []eventsource.Event{orderShipped}, nil
 
 	default:
-		return nil, fmt.Errorf("unhandled command, %v", v)
+		return nil, fmt.Errorf("unhandled command, %T", v)
 	}
 }
