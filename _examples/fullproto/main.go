@@ -53,6 +53,11 @@ func main() {
 	})
 	check(err)
 
+	_, err = repo.Apply(ctx, &orders.CancelOrder{
+		CommandModel: eventsource.CommandModel{ID: id},
+	})
+	check(err)
+
 	aggregate, err := repo.Load(ctx, id)
 	check(err)
 

@@ -2,6 +2,7 @@ package orders
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -26,26 +27,29 @@ const (
 	CancelledState = "cancelled"
 )
 
-var allowedTransitions = map[string]map[string]struct{}{
-	EmptyState: {
-		CreatedState: struct{}{},
-	},
-	CreatedState: {
-		ShippedState:   struct{}{},
-		CancelledState: struct{}{},
-	},
-	ShippedState:   {},
-	CancelledState: {},
-}
+var (
+	ErrTransitionNotAllowed = errors.New("transition not allowed")
+	allowedTransitions      = map[string]map[string]struct{}{
+		EmptyState: {
+			CreatedState: struct{}{},
+		},
+		CreatedState: {
+			ShippedState:   struct{}{},
+			CancelledState: struct{}{},
+		},
+		ShippedState:   {},
+		CancelledState: {},
+	}
+)
 
-func TransitionAllowed(from, to string) bool {
+func TransitionAllowed(from, to string) error {
 	if stateRecord, ok := allowedTransitions[from]; ok {
 		// Ok, we found the from state in the map, is the value of the to correct?
 		if _, ok := stateRecord[to]; ok {
-			return true
+			return nil
 		}
 	}
-	return false
+	return fmt.Errorf("transition from %s to %s: %w", from, to, ErrTransitionNotAllowed)
 }
 
 //OrderCreated event used a marker of order created
@@ -114,8 +118,8 @@ func (item *Order) On(event eventsource.Event) error {
 func (item *Order) Apply(ctx context.Context, command eventsource.Command) ([]eventsource.Event, error) {
 	switch v := command.(type) {
 	case *CreateOrder:
-		if !TransitionAllowed(item.State, v.StateName()) {
-			return nil, fmt.Errorf("State transition from %s to %s not allowed", item.State, v.StateName())
+		if err := TransitionAllowed(item.State, v.StateName()); err != nil {
+			return nil, err
 		}
 		orderCreated := &OrderCreated{
 			OrderCreated: &pb.OrderCreated{
@@ -123,14 +127,10 @@ func (item *Order) Apply(ctx context.Context, command eventsource.Command) ([]ev
 			},
 		}
 		return []eventsource.Event{orderCreated}, nil
-
 	case *ShipOrder:
-		if !TransitionAllowed(item.State, v.StateName()) {
-			return nil, fmt.Errorf("State transition from %s to %s not allowed", item.State, v.StateName())
+		if err := TransitionAllowed(item.State, v.StateName()); err != nil {
+			return nil, err
 		}
-		//if item.State != "created" {
-		//	return nil, fmt.Errorf("order, %v, has already shipped", command.AggregateID())
-		//}
 		orderShipped := &OrderShipped{
 			OrderShipped: &pb.OrderShipped{
 				OrderId: command.AggregateID(), Version: int32(item.Version + 1), At: timestamppb.New(time.Now()),
