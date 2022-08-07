@@ -1,16 +1,12 @@
 package boltdbstore
 
 import (
+	"bytes"
 	"context"
 	"encoding/binary"
-	"os"
-
 	"fmt"
-
 	"math"
-
-	"bytes"
-
+	"os"
 	"strings"
 
 	"github.com/boltdb/bolt"

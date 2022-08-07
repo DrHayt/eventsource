@@ -12,6 +12,7 @@ import (
 func withTestDB(t *testing.T, test func(store *boltdbstore.Store, ctx context.Context)) {
 	ctx := context.Background()
 	store, err := boltdbstore.New("test")
+	//defer store.Close()
 	assert.Nil(t, err)
 	test(store, ctx)
 	store.Delete()
