@@ -213,7 +213,7 @@ type Builder struct {
 }
 
 func NewBuilder(id string, version int) *Builder {
-	return &Builder {
+	return &Builder{
 		id:      id,
 		version: version,
 	}
