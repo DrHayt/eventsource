@@ -44,16 +44,13 @@ func main() {
 	//	panic(err)
 	//}
 
-	t0, err := repo.Apply(ctx, &orders.CreateOrder{
-		CommandModel: eventsource.CommandModel{ID: id},
-	})
+	t0, err := repo.Apply(ctx,
+		&orders.CreateOrder{
+			CommandModel: eventsource.CommandModel{ID: id},
+		},
+	)
 	check(err)
 	spew.Dump(t0)
-
-	//_, err = repo.Apply(ctx, &orders.ShipOrder{
-	//	CommandModel: eventsource.CommandModel{ID: id},
-	//})
-	//check(err)
 
 	t1, err := repo.Apply(ctx, &orders.ChangeNameOrder{
 		CommandModel: eventsource.CommandModel{ID: id},

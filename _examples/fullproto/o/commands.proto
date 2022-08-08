@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/vancelongwill/_examples/fullproto/orders";
+package orders;
+
+message CreateOrder {
+  string Id = 1;
+}
+
+message CancelOrder {
+  string Id = 1;
+}
+
+message AuditOrder {
+  string Id = 1;
+}
+
+message ChangeName {
+  string Id = 1;
+}

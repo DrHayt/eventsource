@@ -28,6 +28,7 @@ type Order struct {
 func (item *Order) On(event eventsource.Event) error {
 	switch v := event.(type) {
 	case *OrderCreated:
+		item.CreatedAt = event.EventAt()
 		item.State = StateCreated
 
 	case *OrderShipped:
