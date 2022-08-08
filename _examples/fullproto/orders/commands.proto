@@ -4,17 +4,26 @@ option go_package = "github.com/vancelongwill/_examples/fullproto/orders";
 package orders;
 
 message CreateOrder {
-  string Id = 1;
+  string id = 1;
+  string by = 2;
 }
 
 message CancelOrder {
-  string Id = 1;
+  string id = 1;
+  string reason = 2;
 }
 
 message AuditOrder {
-  string Id = 1;
+  string id = 1;
 }
 
 message ChangeName {
-  string Id = 1;
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+message Ship {
+  string id = 1;
+  string destination = 2;
 }

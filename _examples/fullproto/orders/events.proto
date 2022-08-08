@@ -4,36 +4,28 @@ package orders;
 
 option go_package = "github.com/vancelongwill/_examples/fullproto/orders";
 
-enum OrderState {
-  UNKNOWN = 0;
-  CREATED = 1;
-  SHIPPED = 2;
-  CANCELLED = 3;
-}
+//import "aggregate.proto";
 
-// Might not be safe based on nil event data.
-message EventData {
-  string id = 1;
-  int32 version = 2;
-  int64 at = 3;
-}
+//message Snapshot {
+//  string id = 1;
+//  int32 version = 2;
+//  int64 at = 3;
+//  Aggregate snapshot = 4;
+//}
 
-message OrderSnapshot {
-  // EventData ed = 1;
-  string id = 1;
-  int32 version = 2;
-  int64 at = 3;
-  string name = 4;
-  string first_name = 5;
-  string last_name = 6;
-  OrderState state = 7;
-}
 
 message OrderCreated {
   string id = 1;
   int32 version = 2;
   int64 at = 3;
   string by = 4;
+}
+
+message OrderShipped {
+  string id = 1;
+  int32 version = 2;
+  int64 at = 3;
+  string destination = 4;
 }
 
 message OrderCancelled {
@@ -63,4 +55,5 @@ message event_container {
   OrderCancelled    order_cancelled = 3;
   OrderAudited      order_audited = 4;
   OrderNameChanged  order_name_changed = 5;
+  OrderShipped      order_shipped = 6;
 }

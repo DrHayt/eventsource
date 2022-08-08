@@ -27,3 +27,9 @@ func (c *ChangeName) AggregateID() string {
 	return c.Id
 }
 
+
+// AggregateID implements the eventsource.Command interface for Ship
+func (c *Ship) AggregateID() string {
+	return c.Id
+}
+

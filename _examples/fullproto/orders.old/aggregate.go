@@ -9,7 +9,6 @@ import (
 	"github.com/vancelongwill/eventsource/_examples/fullproto/pb"
 )
 
-//Order is the aggregate generated from the left fold of events
 type Order struct {
 	ID              string
 	Version         int

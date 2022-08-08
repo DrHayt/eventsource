@@ -54,6 +54,10 @@ func (m *OrderNameChanged) AggregateID() string { return m.Id }
 func (m *OrderNameChanged) EventVersion() int   { return int(m.Version) }
 func (m *OrderNameChanged) EventAt() time.Time  { return time.Unix(m.At, 0) }
 
+func (m *OrderShipped) AggregateID() string { return m.Id }
+func (m *OrderShipped) EventVersion() int   { return int(m.Version) }
+func (m *OrderShipped) EventAt() time.Time  { return time.Unix(m.At, 0) }
+
 
 func MarshalEvent(event eventsource.Event) ([]byte, error) {
 	container := &EventContainer{}
@@ -75,6 +79,10 @@ func MarshalEvent(event eventsource.Event) ([]byte, error) {
 	case *OrderNameChanged:
 		container.Type = 5
 		container.OrderNameChanged = v
+
+	case *OrderShipped:
+		container.Type = 6
+		container.OrderShipped = v
 
 	default:
 		return nil, fmt.Errorf("Unhandled type, %v", event)
@@ -109,6 +117,9 @@ func UnmarshalEvent(data []byte) (eventsource.Event, error) {
 
 	case 5:
 		event = container.OrderNameChanged
+
+	case 6:
+		event = container.OrderShipped
 
 	default:
 		return nil, fmt.Errorf("Unhandled type, %v", container.Type)
@@ -214,36 +225,23 @@ func (b *Builder) nextVersion() int32 {
 }
 
 
-func (b *Builder) EventData() {
-	event := &EventData{
-		Id:      b.id,
-		Version: b.nextVersion(),
-		At:      time.Now().Unix(),
-
-	}
-	b.Events = append(b.Events, event)
-}
-
-func (b *Builder) OrderSnapshot(name string, firstname string, lastname string, state OrderState, ) {
-	event := &OrderSnapshot{
-		Id:      b.id,
-		Version: b.nextVersion(),
-		At:      time.Now().Unix(),
-	Name: name,
-	FirstName: firstname,
-	LastName: lastname,
-	State: state,
-
-	}
-	b.Events = append(b.Events, event)
-}
-
 func (b *Builder) OrderCreated(by string, ) {
 	event := &OrderCreated{
 		Id:      b.id,
 		Version: b.nextVersion(),
 		At:      time.Now().Unix(),
 	By: by,
+
+	}
+	b.Events = append(b.Events, event)
+}
+
+func (b *Builder) OrderShipped(destination string, ) {
+	event := &OrderShipped{
+		Id:      b.id,
+		Version: b.nextVersion(),
+		At:      time.Now().Unix(),
+	Destination: destination,
 
 	}
 	b.Events = append(b.Events, event)
