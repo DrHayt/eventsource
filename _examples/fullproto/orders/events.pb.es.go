@@ -214,11 +214,36 @@ func (b *Builder) nextVersion() int32 {
 }
 
 
-func (b *Builder) OrderCreated() {
+func (b *Builder) EventData() {
+	event := &EventData{
+		Id:      b.id,
+		Version: b.nextVersion(),
+		At:      time.Now().Unix(),
+
+	}
+	b.Events = append(b.Events, event)
+}
+
+func (b *Builder) OrderSnapshot(name string, firstname string, lastname string, state OrderState, ) {
+	event := &OrderSnapshot{
+		Id:      b.id,
+		Version: b.nextVersion(),
+		At:      time.Now().Unix(),
+	Name: name,
+	FirstName: firstname,
+	LastName: lastname,
+	State: state,
+
+	}
+	b.Events = append(b.Events, event)
+}
+
+func (b *Builder) OrderCreated(by string, ) {
 	event := &OrderCreated{
 		Id:      b.id,
 		Version: b.nextVersion(),
 		At:      time.Now().Unix(),
+	By: by,
 
 	}
 	b.Events = append(b.Events, event)
