@@ -9,7 +9,7 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/vancelongwill/eventsource"
-	orders2 "github.com/vancelongwill/eventsource/_examples/fullproto/models/orders"
+	"github.com/vancelongwill/eventsource/_examples/fullproto/models/orders"
 	"github.com/vancelongwill/eventsource/boltdbstore"
 )
 
@@ -33,16 +33,16 @@ func main() {
 	store, err := boltdbstore.New("orders")
 	check(err)
 
-	repo := eventsource.New(&orders2.Aggregate{},
+	repo := eventsource.New(&orders.Aggregate{},
 		eventsource.WithStore(store),
-		eventsource.WithSerializer(orders2.NewSerializer()),
+		eventsource.WithSerializer(orders.NewSerializer()),
 	)
 
 	id := *OrderId
 	ctx := context.Background()
 
 	t0, err := repo.Apply(ctx,
-		&orders2.CreateOrder{
+		&orders.CreateOrder{
 			Id: id,
 			By: "Elon Musk",
 		},
@@ -51,7 +51,7 @@ func main() {
 	spew.Dump(t0)
 
 	for i := 0; i < 20000; i++ {
-		if _, err := repo.Apply(ctx, &orders2.ChangeName{
+		if _, err := repo.Apply(ctx, &orders.ChangeName{
 			Id:        id,
 			FirstName: "First",
 			LastName:  "Last",
@@ -88,7 +88,7 @@ func main() {
 		aggregate, err := repo.Load(ctx, id)
 		check(err)
 		fmt.Printf("Too: %s\n", time.Now().Sub(t0))
-		found := aggregate.(*orders2.Aggregate)
+		found := aggregate.(*orders.Aggregate)
 		spew.Dump(found)
 	}
 
@@ -97,7 +97,7 @@ func main() {
 		aggregate, err := repo.Load(ctx, id)
 		check(err)
 		fmt.Printf("Too: %s\n", time.Now().Sub(t1))
-		found := aggregate.(*orders2.Aggregate)
+		found := aggregate.(*orders.Aggregate)
 		spew.Dump(found)
 	}
 
