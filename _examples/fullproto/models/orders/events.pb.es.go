@@ -200,7 +200,7 @@ func (d *Decoder) ReadEvent() (eventsource.Event, error) {
 }
 
 func NewDecoder(r io.Reader) *Decoder {
-	return &Decoder {
+	return &Decoder{
 		r:       bufio.NewReader(r),
 		scratch: bytes.NewBuffer(nil),
 	}
@@ -213,7 +213,7 @@ type Builder struct {
 }
 
 func NewBuilder(id string, version int) *Builder {
-	return &Builder {
+	return &Builder{
 		id:      id,
 		version: version,
 	}
