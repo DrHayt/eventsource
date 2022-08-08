@@ -26,51 +26,42 @@ func main() {
 	store, err := boltdbstore.New("orders")
 	check(err)
 
-	repo := eventsource.New(&orders.Order{},
+	repo := eventsource.New(&orders.Aggregate{},
 		eventsource.WithStore(store),
-		eventsource.WithSerializer(eventsource.NewProtoSerializer(
-			orders.OrderCreated{},
-			orders.OrderShipped{},
-			orders.OrderCancelled{},
-			orders.OrderNameChanged{},
-		)),
+		eventsource.WithSerializer(orders.NewSerializer()),
 	)
 
 	id := *OrderId
 	ctx := context.Background()
 
-	//if _, err := repo.Load(ctx, id); err != nil {
-	//	// How to distinguish between a missing ID and a systems failure.
-	//	panic(err)
-	//}
-
 	t0, err := repo.Apply(ctx,
 		&orders.CreateOrder{
-			CommandModel: eventsource.CommandModel{ID: id},
+			Id: id,
+			By: "Elon Musk",
 		},
 	)
 	check(err)
 	spew.Dump(t0)
 
-	t1, err := repo.Apply(ctx, &orders.ChangeNameOrder{
-		CommandModel: eventsource.CommandModel{ID: id},
-		FirstName:    "First",
-		LastName:     "First",
+	t1, err := repo.Apply(ctx, &orders.ChangeName{
+		Id:        id,
+		FirstName: "First",
+		LastName:  "First",
 	})
 	check(err)
 	spew.Dump(t1)
 
 	t2, err := repo.Apply(ctx, &orders.CancelOrder{
-		CommandModel: eventsource.CommandModel{ID: id},
-		CancelReason: "Cause I felt like it",
+		Id:     id,
+		Reason: "I dont like you",
 	})
 	check(err)
 	spew.Dump(t2)
 
-	t3, err := repo.Apply(ctx, &orders.ChangeNameOrder{
-		CommandModel: eventsource.CommandModel{ID: id},
-		FirstName:    "Second",
-		LastName:     "Second",
+	t3, err := repo.Apply(ctx, &orders.ChangeName{
+		Id:        id,
+		FirstName: "First",
+		LastName:  "Second",
 	})
 	check(err)
 	spew.Dump(t3)
@@ -78,7 +69,7 @@ func main() {
 	aggregate, err := repo.Load(ctx, id)
 	check(err)
 
-	found := aggregate.(*orders.Order)
+	found := aggregate.(*orders.Aggregate)
 	//fmt.Printf("Order %v [version %v] %v %v\n", found.ID, found.Version, found.State, found.UpdatedAt.Format(time.RFC822))
 	spew.Dump(found)
 }
