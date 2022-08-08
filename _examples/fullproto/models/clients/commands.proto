@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package = "github.com/vancelongwill/_examples/fullproto/clients";
+
+package clients;
+
+message Create {
+  string id = 1;
+  string name = 2;
+  string by = 3;
+}
+
+message Activate {
+  string id = 1;
+  string by = 2;
+}
+
+message DeActivate {
+  string id = 1;
+  string by = 2;
+}
+
+message ChangeName {
+  string id = 1;
+  string name = 2;
+  string by = 3;
+}

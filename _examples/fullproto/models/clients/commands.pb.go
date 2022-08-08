@@ -4,7 +4,7 @@
 // 	protoc        v3.21.4
 // source: commands.proto
 
-package orders
+package clients
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -20,17 +20,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type CreateOrder struct {
+type Create struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	By string `protobuf:"bytes,2,opt,name=by,proto3" json:"by,omitempty"`
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	By   string `protobuf:"bytes,3,opt,name=by,proto3" json:"by,omitempty"`
 }
 
-func (x *CreateOrder) Reset() {
-	*x = CreateOrder{}
+func (x *Create) Reset() {
+	*x = Create{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_commands_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -38,13 +39,13 @@ func (x *CreateOrder) Reset() {
 	}
 }
 
-func (x *CreateOrder) String() string {
+func (x *Create) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateOrder) ProtoMessage() {}
+func (*Create) ProtoMessage() {}
 
-func (x *CreateOrder) ProtoReflect() protoreflect.Message {
+func (x *Create) ProtoReflect() protoreflect.Message {
 	mi := &file_commands_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -56,36 +57,43 @@ func (x *CreateOrder) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateOrder.ProtoReflect.Descriptor instead.
-func (*CreateOrder) Descriptor() ([]byte, []int) {
+// Deprecated: Use Create.ProtoReflect.Descriptor instead.
+func (*Create) Descriptor() ([]byte, []int) {
 	return file_commands_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateOrder) GetId() string {
+func (x *Create) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *CreateOrder) GetBy() string {
+func (x *Create) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Create) GetBy() string {
 	if x != nil {
 		return x.By
 	}
 	return ""
 }
 
-type CancelOrder struct {
+type Activate struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id     string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Reason string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	By string `protobuf:"bytes,2,opt,name=by,proto3" json:"by,omitempty"`
 }
 
-func (x *CancelOrder) Reset() {
-	*x = CancelOrder{}
+func (x *Activate) Reset() {
+	*x = Activate{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_commands_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -93,13 +101,13 @@ func (x *CancelOrder) Reset() {
 	}
 }
 
-func (x *CancelOrder) String() string {
+func (x *Activate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CancelOrder) ProtoMessage() {}
+func (*Activate) ProtoMessage() {}
 
-func (x *CancelOrder) ProtoReflect() protoreflect.Message {
+func (x *Activate) ProtoReflect() protoreflect.Message {
 	mi := &file_commands_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -111,35 +119,36 @@ func (x *CancelOrder) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CancelOrder.ProtoReflect.Descriptor instead.
-func (*CancelOrder) Descriptor() ([]byte, []int) {
+// Deprecated: Use Activate.ProtoReflect.Descriptor instead.
+func (*Activate) Descriptor() ([]byte, []int) {
 	return file_commands_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CancelOrder) GetId() string {
+func (x *Activate) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *CancelOrder) GetReason() string {
+func (x *Activate) GetBy() string {
 	if x != nil {
-		return x.Reason
+		return x.By
 	}
 	return ""
 }
 
-type AuditOrder struct {
+type DeActivate struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	By string `protobuf:"bytes,2,opt,name=by,proto3" json:"by,omitempty"`
 }
 
-func (x *AuditOrder) Reset() {
-	*x = AuditOrder{}
+func (x *DeActivate) Reset() {
+	*x = DeActivate{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_commands_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -147,13 +156,13 @@ func (x *AuditOrder) Reset() {
 	}
 }
 
-func (x *AuditOrder) String() string {
+func (x *DeActivate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AuditOrder) ProtoMessage() {}
+func (*DeActivate) ProtoMessage() {}
 
-func (x *AuditOrder) ProtoReflect() protoreflect.Message {
+func (x *DeActivate) ProtoReflect() protoreflect.Message {
 	mi := &file_commands_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -165,14 +174,21 @@ func (x *AuditOrder) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AuditOrder.ProtoReflect.Descriptor instead.
-func (*AuditOrder) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeActivate.ProtoReflect.Descriptor instead.
+func (*DeActivate) Descriptor() ([]byte, []int) {
 	return file_commands_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *AuditOrder) GetId() string {
+func (x *DeActivate) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *DeActivate) GetBy() string {
+	if x != nil {
+		return x.By
 	}
 	return ""
 }
@@ -182,9 +198,9 @@ type ChangeName struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id        string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName  string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	By   string `protobuf:"bytes,3,opt,name=by,proto3" json:"by,omitempty"`
 }
 
 func (x *ChangeName) Reset() {
@@ -226,71 +242,16 @@ func (x *ChangeName) GetId() string {
 	return ""
 }
 
-func (x *ChangeName) GetFirstName() string {
+func (x *ChangeName) GetName() string {
 	if x != nil {
-		return x.FirstName
+		return x.Name
 	}
 	return ""
 }
 
-func (x *ChangeName) GetLastName() string {
+func (x *ChangeName) GetBy() string {
 	if x != nil {
-		return x.LastName
-	}
-	return ""
-}
-
-type Ship struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Destination string `protobuf:"bytes,2,opt,name=destination,proto3" json:"destination,omitempty"`
-}
-
-func (x *Ship) Reset() {
-	*x = Ship{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_commands_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Ship) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Ship) ProtoMessage() {}
-
-func (x *Ship) ProtoReflect() protoreflect.Message {
-	mi := &file_commands_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Ship.ProtoReflect.Descriptor instead.
-func (*Ship) Descriptor() ([]byte, []int) {
-	return file_commands_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *Ship) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *Ship) GetDestination() string {
-	if x != nil {
-		return x.Destination
+		return x.By
 	}
 	return ""
 }
@@ -299,28 +260,25 @@ var File_commands_proto protoreflect.FileDescriptor
 
 var file_commands_proto_rawDesc = []byte{
 	0x0a, 0x0e, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x12, 0x06, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x22, 0x2d, 0x0a, 0x0b, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x62, 0x79, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x02, 0x62, 0x79, 0x22, 0x35, 0x0a, 0x0b, 0x43, 0x61, 0x6e, 0x63, 0x65,
-	0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0x1c,
-	0x0a, 0x0a, 0x41, 0x75, 0x64, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x58, 0x0a, 0x0a,
-	0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69,
-	0x72, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
-	0x66, 0x69, 0x72, 0x73, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x73,
-	0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61,
-	0x73, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x38, 0x0a, 0x04, 0x53, 0x68, 0x69, 0x70, 0x12, 0x0e,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x20,
-	0x0a, 0x0b, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x42, 0x35, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76,
-	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6f, 0x6e, 0x67, 0x77, 0x69, 0x6c, 0x6c, 0x2f, 0x5f, 0x65, 0x78,
-	0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x2f, 0x66, 0x75, 0x6c, 0x6c, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x2f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x07, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x3c, 0x0a, 0x06, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x62, 0x79, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x62, 0x79, 0x22, 0x2a, 0x0a, 0x08, 0x41, 0x63, 0x74, 0x69, 0x76,
+	0x61, 0x74, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x62, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x62, 0x79, 0x22, 0x2c, 0x0a, 0x0a, 0x44, 0x65, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74,
+	0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
+	0x64, 0x12, 0x0e, 0x0a, 0x02, 0x62, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x62,
+	0x79, 0x22, 0x40, 0x0a, 0x0a, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x62, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x62, 0x79, 0x42, 0x36, 0x5a, 0x34, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x76, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6f, 0x6e, 0x67, 0x77, 0x69, 0x6c, 0x6c, 0x2f,
+	0x5f, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x2f, 0x66, 0x75, 0x6c, 0x6c, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -335,13 +293,12 @@ func file_commands_proto_rawDescGZIP() []byte {
 	return file_commands_proto_rawDescData
 }
 
-var file_commands_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_commands_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_commands_proto_goTypes = []interface{}{
-	(*CreateOrder)(nil), // 0: orders.CreateOrder
-	(*CancelOrder)(nil), // 1: orders.CancelOrder
-	(*AuditOrder)(nil),  // 2: orders.AuditOrder
-	(*ChangeName)(nil),  // 3: orders.ChangeName
-	(*Ship)(nil),        // 4: orders.Ship
+	(*Create)(nil),     // 0: clients.Create
+	(*Activate)(nil),   // 1: clients.Activate
+	(*DeActivate)(nil), // 2: clients.DeActivate
+	(*ChangeName)(nil), // 3: clients.ChangeName
 }
 var file_commands_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -358,7 +315,7 @@ func file_commands_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_commands_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateOrder); i {
+			switch v := v.(*Create); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -370,7 +327,7 @@ func file_commands_proto_init() {
 			}
 		}
 		file_commands_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CancelOrder); i {
+			switch v := v.(*Activate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -382,7 +339,7 @@ func file_commands_proto_init() {
 			}
 		}
 		file_commands_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuditOrder); i {
+			switch v := v.(*DeActivate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -405,18 +362,6 @@ func file_commands_proto_init() {
 				return nil
 			}
 		}
-		file_commands_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Ship); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -424,7 +369,7 @@ func file_commands_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_commands_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

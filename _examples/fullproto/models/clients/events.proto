@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package clients;
+
+option go_package = "github.com/vancelongwill/_examples/fullproto/clients";
+
+message EventContainer {
+  int32 type = 1;
+  Created created =2;
+  Activated activated =3;
+  DeActivated de_activated =4;
+  NameChanged name_changed = 5;
+}
+
+message Created {
+  string id = 1;
+  int32 version = 2;
+  int64 at = 3;
+  string by = 4;
+}
+
+message Activated {
+  string id = 1;
+  int32 version = 2;
+  int64 at = 3;
+  string by = 4;
+}
+
+message DeActivated {
+  string id = 1;
+  int32 version = 2;
+  int64 at = 3;
+  string by = 4;
+}
+
+message NameChanged {
+  string id = 1;
+  int32 version = 2;
+  int64 at = 3;
+  string name = 4;
+  string by = 5;
+}
